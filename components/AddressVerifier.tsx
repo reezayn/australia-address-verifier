@@ -5,12 +5,78 @@ import { VALIDATE_ADDRESS } from './mutation'
 import Link from 'next/link'
 import Image from 'next/image'
 import AustraliaMap from '@/public/australia.png'
+import useTypewriter from '@/hooks/useTypewriter'
 
 const AddressVerifier = () => {
   const [postcode, setPostcode] = useState('')
   const [suburb, setSuburb] = useState('')
   const [state, setState] = useState('')
   const [message, setMessage] = useState('')
+
+  const postcodePlaceholder = useTypewriter({
+    words: [
+      '2000',
+      '2001',
+      '3000',
+      '3004',
+      '4000',
+      '4006',
+      '5000',
+      '5008',
+      '6000',
+      '6005',
+      '7000',
+      '7010',
+      '0800',
+      '0801',
+      '2600',
+    ],
+    typingSpeed: 100,
+    deletingSpeed: 50,
+    pauseTime: 1500,
+    initialDelay: 3000,
+    cycleDelay: 6000,
+  })
+
+  const suburbPlaceholder = useTypewriter({
+    words: [
+      'Bondi',
+      'Manly',
+      'Surry Hills',
+      'St Kilda',
+      'Fitzroy',
+      'Brunswick',
+      'Paddington',
+      'Newtown',
+      'Glebe',
+      'Toorak',
+      'Parramatta',
+      'Chippendale',
+    ],
+    typingSpeed: 100,
+    deletingSpeed: 50,
+    pauseTime: 1500,
+    initialDelay: 3000,
+    cycleDelay: 6000,
+  })
+
+  const statePlaceholder = useTypewriter({
+    words: [
+      'New South Wales',
+      'Victoria',
+      'Queensland',
+      'South Australia',
+      'Western Australia',
+      'Tasmania',
+      'Northern Territory',
+      'Australian Capital Territory',
+    ],
+    typingSpeed: 100,
+    deletingSpeed: 50,
+    pauseTime: 1500,
+    initialDelay: 3000,
+    cycleDelay: 6000,
+  })
 
   const [validateAddress, { loading, error }] = useMutation(VALIDATE_ADDRESS)
 
@@ -109,7 +175,7 @@ const AddressVerifier = () => {
               value={postcode}
               onChange={(e) => setPostcode(e.target.value)}
               className="w-full px-4 py-2 border-b border-gray-400 focus:outline-none focus:ring-0 text-black placeholder:text-black"
-              placeholder={'Enter postcode'}
+              placeholder={postcodePlaceholder || 'Enter postcode'}
               required
             />
           </div>
@@ -126,7 +192,7 @@ const AddressVerifier = () => {
               value={suburb}
               onChange={(e) => setSuburb(e.target.value)}
               className="w-full px-4 py-2 border-b border-gray-400 focus:outline-none focus:ring-0 text-black placeholder:text-black"
-              placeholder={'Enter suburb'}
+              placeholder={suburbPlaceholder || 'Enter suburb'}
               required
             />
           </div>
@@ -193,6 +259,8 @@ const AddressVerifier = () => {
               'Send Details'
             )}
           </button>
+
+          {/* TODO: some nice muted foreground texts later */}
         </form>
       </div>
 
