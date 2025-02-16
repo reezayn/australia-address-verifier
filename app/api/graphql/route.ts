@@ -16,3 +16,13 @@ const handler = startServerAndCreateNextHandler(server)
 
 export const GET = handler
 export const POST = handler
+
+export const OPTIONS = () =>
+  new Response(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  })
