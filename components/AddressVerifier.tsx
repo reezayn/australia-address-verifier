@@ -2,6 +2,9 @@
 import { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { VALIDATE_ADDRESS } from './mutation'
+import Link from 'next/link'
+import Image from 'next/image'
+import AustraliaMap from '@/public/australia.png'
 
 const AddressVerifier = () => {
   const [postcode, setPostcode] = useState('')
@@ -9,14 +12,11 @@ const AddressVerifier = () => {
   const [state, setState] = useState('')
   const [message, setMessage] = useState('')
 
-  // Initialize the mutation hook.
-  const [validateAddress, { loading, error, data }] =
-    useMutation(VALIDATE_ADDRESS)
+  const [validateAddress, { loading, error }] = useMutation(VALIDATE_ADDRESS)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    // Simple client-side validation: all fields must be filled.
     if (!postcode || !suburb || !state) {
       setMessage('All fields are required.')
       return
@@ -38,70 +38,173 @@ const AddressVerifier = () => {
     }
   }
 
+  const renderRightPanelContent = () => {
+    if (loading) {
+      return (
+        <>
+          <h2 className="text-2xl font-bold mb-4 text-black">Validating</h2>
+          <p className="text-black">
+            Hang on tight while I verify these for you.
+          </p>
+        </>
+      )
+    } else if (error) {
+      return (
+        <>
+          <h2 className="text-2xl font-bold mb-4 text-black">Error</h2>
+          <p className="text-black">
+            {error.message || 'An unexpected error occurred.'}
+          </p>
+        </>
+      )
+    } else if (message) {
+      return (
+        <>
+          <h2 className="text-2xl font-bold mb-4 text-black">Result</h2>
+          <p className="text-black">{message}</p>
+        </>
+      )
+    } else {
+      return (
+        <>
+          <h2 className="text-2xl font-bold mb-4 text-black">
+            Australia Address Verifier
+          </h2>
+          <p className="text-black">Your result will appear here.</p>
+        </>
+      )
+    }
+  }
+
   return (
-    <form
-      data-testid="address-form"
-      onSubmit={handleSubmit}
-      className="max-w-md mx-auto p-6 bg-white shadow rounded"
-    >
-      <div className="mb-4">
-        <label htmlFor="postcode" className="block text-gray-700 font-medium">
-          Postcode
-        </label>
-        <input
-          type="text"
-          id="postcode"
-          value={postcode}
-          onChange={(e) => setPostcode(e.target.value)}
-          className="mt-1 block w-full border border-gray-300 rounded p-2 focus:outline-none focus:ring focus:border-blue-300"
-          required
-        />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="suburb" className="block text-gray-700 font-medium">
-          Suburb
-        </label>
-        <input
-          type="text"
-          id="suburb"
-          value={suburb}
-          onChange={(e) => setSuburb(e.target.value)}
-          className="mt-1 block w-full border border-gray-300 rounded p-2 focus:outline-none focus:ring focus:border-blue-300"
-          required
-        />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="state" className="block text-gray-700 font-medium">
-          State
-        </label>
-        <select
-          id="state"
-          value={state}
-          onChange={(e) => setState(e.target.value)}
-          className="mt-1 block w-full border border-gray-300 rounded p-2 focus:outline-none focus:ring focus:border-blue-300"
-          required
+    <div className="flex flex-col md:flex-row w-full max-w-5xl rounded-3xl overflow-hidden bg-white">
+      {/* Form Section */}
+      <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+        <div className="text-2xl md:text-3xl font-bold mb-8 text-gray-900 flex items-center gap-x-3">
+          <div>
+            <Image
+              src={AustraliaMap}
+              alt="Map of Australia"
+              className="w-10 pointer-events-none"
+            />
+          </div>
+          {/* <div>Australia</div> */}
+          <div>Address Verifier</div>
+        </div>
+        <form
+          data-testid="address-form"
+          onSubmit={handleSubmit}
+          className="gap-y-5 flex flex-col items-center justify-center"
         >
-          <option value="">Select a state</option>
-          <option value="NSW">NSW</option>
-          <option value="VIC">VIC</option>
-          <option value="QLD">QLD</option>
-          <option value="WA">WA</option>
-          <option value="SA">SA</option>
-          <option value="TAS">TAS</option>
-          {/* <option value="ACT">ACT</option>
-          <option value="NT">NT</option> */}
-        </select>
+          <div className="w-full px-1">
+            <label
+              htmlFor="postcode"
+              className="block text-sm font-semibold text-gray-700 mb-2"
+            >
+              Postcode
+            </label>
+            <input
+              type="text"
+              id="postcode"
+              value={postcode}
+              onChange={(e) => setPostcode(e.target.value)}
+              className="w-full px-4 py-2 border-b border-gray-400 focus:outline-none focus:ring-0 text-black placeholder:text-black"
+              placeholder={'Enter postcode'}
+              required
+            />
+          </div>
+          <div className="w-full px-1">
+            <label
+              htmlFor="suburb"
+              className="block text-sm font-semibold text-gray-700 mb-2"
+            >
+              Suburb
+            </label>
+            <input
+              type="text"
+              id="suburb"
+              value={suburb}
+              onChange={(e) => setSuburb(e.target.value)}
+              className="w-full px-4 py-2 border-b border-gray-400 focus:outline-none focus:ring-0 text-black placeholder:text-black"
+              placeholder={'Enter suburb'}
+              required
+            />
+          </div>
+          <div className="w-full px-1">
+            <label
+              htmlFor="state"
+              className="block text-sm font-semibold text-gray-700 mb-2"
+            >
+              State
+            </label>
+            <select
+              id="state"
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+              className="w-full px-4 py-2 border-b border-gray-400 focus:outline-none focus:ring-0 text-black"
+              required
+            >
+              <option value="" className="bg-white text-black">
+                {'Select a state'}
+              </option>
+              <option value="NSW" className="bg-white text-black">
+                New South Wales
+              </option>
+              <option value="VIC" className="bg-white text-black">
+                Victoria
+              </option>
+              <option value="QLD" className="bg-white text-black">
+                Queensland
+              </option>
+              <option value="WA" className="bg-white text-black">
+                Western Australia
+              </option>
+              <option value="SA" className="bg-white text-black">
+                South Australia
+              </option>
+              <option value="TAS" className="bg-white text-black">
+                Tasmania
+              </option>
+            </select>
+          </div>
+
+          <button
+            type="submit"
+            className={`w-full mt-4 bg-black text-white py-[10px] rounded-xl font-semibold hover:bg-gray-800 transition-colors ${loading ? 'cursor-not-allowed' : ''}`}
+            disabled={loading}
+          >
+            {loading ? (
+              <div className="flex items-center gap-x-2 w-full justify-center">
+                <div className="h-5 w-5 bg-transparent border-[3px] border-t-tangerine rounded-full animate-spin"></div>
+                <div>
+                  {' '}
+                  {
+                    [
+                      'Hang tight, mate...',
+                      'Hold ya horses...',
+                      'Just a tick...',
+                      'Hold on, nearly there...',
+                      'Wrangling some data...',
+                    ][Math.floor(Math.random() * 5)]
+                  }
+                </div>
+              </div>
+            ) : (
+              'Send Details'
+            )}
+          </button>
+        </form>
       </div>
-      {loading && <p className="mb-4 text-blue-500">Validating...</p>}
-      {error && <p className="mb-4 text-red-500">Error: {error.message}</p>}
-      {message && <p className="mb-4 text-green-500">{message}</p>}
-      <button
-        type="submit"
-        className="w-full bg-blue-500 text-white font-medium py-2 rounded hover:bg-blue-600 transition-colors"
-      >
-        Submit
-      </button>
-    </form>
+
+      {/* Right Section: Dynamic Message Display */}
+      <div className="flex w-full lg:w-1/2 items-center justify-center p-2 lg:p-5 lg:pl-0 bg-white">
+        <div className="h-full w-full p-3 lg:p-0 flex items-center justify-center lg:min-h-[595px] rounded-3xl bg-peach">
+          <div className="text-center max-w-xs">
+            {renderRightPanelContent()}
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 
