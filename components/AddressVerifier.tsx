@@ -4,7 +4,6 @@ import { useMutation } from '@apollo/client'
 import { VALIDATE_ADDRESS } from './mutation'
 import Link from 'next/link'
 import Image from 'next/image'
-import AustraliaMap from '@/public/australia.png'
 import useTypewriter from '@/hooks/useTypewriter'
 
 const AddressVerifier = () => {
@@ -149,9 +148,11 @@ const AddressVerifier = () => {
         <div className="text-2xl md:text-3xl font-bold mb-8 text-gray-900 flex items-center gap-x-3">
           <div>
             <Image
-              src={AustraliaMap}
+              src={'/australia.png'}
               alt="Map of Australia"
               className="w-10 pointer-events-none"
+              height={40}
+              width={40}
             />
           </div>
           {/* <div>Australia</div> */}
