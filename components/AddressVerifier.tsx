@@ -59,23 +59,23 @@ const AddressVerifier = () => {
     cycleDelay: 6000,
   })
 
-  const statePlaceholder = useTypewriter({
-    words: [
-      'New South Wales',
-      'Victoria',
-      'Queensland',
-      'South Australia',
-      'Western Australia',
-      'Tasmania',
-      'Northern Territory',
-      'Australian Capital Territory',
-    ],
-    typingSpeed: 100,
-    deletingSpeed: 50,
-    pauseTime: 1500,
-    initialDelay: 3000,
-    cycleDelay: 6000,
-  })
+  // const statePlaceholder = useTypewriter({
+  //   words: [
+  //     'New South Wales',
+  //     'Victoria',
+  //     'Queensland',
+  //     'South Australia',
+  //     'Western Australia',
+  //     'Tasmania',
+  //     'Northern Territory',
+  //     'Australian Capital Territory',
+  //   ],
+  //   typingSpeed: 100,
+  //   deletingSpeed: 50,
+  //   pauseTime: 1500,
+  //   initialDelay: 3000,
+  //   cycleDelay: 6000,
+  // })
 
   const [validateAddress, { loading, error }] = useMutation(VALIDATE_ADDRESS)
 

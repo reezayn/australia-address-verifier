@@ -14,8 +14,19 @@ export const config = {
 
 const handler = startServerAndCreateNextHandler(server)
 
-export const GET = handler
-export const POST = handler
+export async function GET(
+  request: Request,
+  // context: { params?: Record<string, string> }
+): Promise<Response> {
+  return handler(request)
+}
+
+export async function POST(
+  request: Request,
+  // context: { params?: Record<string, string> }
+): Promise<Response> {
+  return handler(request)
+}
 
 export const OPTIONS = () =>
   new Response(null, {
