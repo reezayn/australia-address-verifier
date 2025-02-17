@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Australia Address Validator
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This project is an address validation application using modern web technologies including Next.js 15 (with the new App Router), React, TypeScript, Tailwind CSS, and Apollo (Client & Server) to create a secure, robust solution. The application features a user-friendly form that captures a postcode, suburb, and state and validates the address by querying the Australia Post API through a GraphQL proxy.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Installation and Setup
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Clone the Repository:**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   ```bash
+   git clone https://github.com/reezayn/lawpath-tech-test.git
+   cd lawpath-tech-test
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Install Dependencies:**
 
-## Learn More
+   ```bash
+   npm install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+3. **Set Up Environment Variables:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   Create a file named `.env.local` in the project root and add:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   API_BEARER_TOKEN={'your-api-bearer-token'}
+   ```
 
-## Deploy on Vercel
+4. **Start the Development Server:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Usage
+
+- **UI Form:**
+  - Navigate to the home page.
+  - Enter a postcode, suburb, and state.
+  - Upon submission, the form sends a GraphQL mutation to the backend.
+  - The backend calls the Australia Post API, validates the input, and returns an appropriate message:
+    - **Valid Input Example:**
+      - State: `NSW`
+      - Suburb: `Broadway`
+      - Postcode: `2007`  
+        → _"The postcode, suburb, and state input are valid."_
+    - **Error Example:**
+      - If the postcode does not match or the suburb isn’t found in the state, detailed error messages are displayed.
+
+## Running Tests
+
+- **Run All Tests:**
+
+  ```bash
+  npm run test
+  ```
+
+This will run every test case from Appendix B.
+
+## Security Considerations
+
+- **Environment Variables:**
+  - Sensitive API keys are stored in `.env.local` and are not committed to version control.
+- **Server-Side Operations:**
+  - The Australia Post API is called from the backend GraphQL proxy, keeping the API key secure.
+- **CORS and OPTIONS Handling:**
+  - The API route supports OPTIONS requests for CORS preflight, ensuring proper API access.
+- **Input Validation:**
+  - Both client-side and server-side validations are implemented.
+
+## Technologies Used
+
+- **Frontend:** Next.js 15 (App Router), React, TypeScript, Tailwind CSS
+- **Backend/GraphQL:** Apollo Client, @apollo/server, @as-integrations/next
+- **Testing:** Jest
+- **Tooling:** ESLint, Prettier
