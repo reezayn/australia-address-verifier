@@ -260,7 +260,18 @@ const AddressVerifier = () => {
             )}
           </button>
 
-          {/* TODO: some nice muted foreground texts later */}
+          <div className="text-xs text-gray-400 text-left w-full mt-4 px-1">
+            <p className="my-1">
+              Please ensure that the address you provided is located in
+              Australia.
+            </p>
+            <p className="my-1">
+              <Link href="/examples" className="underline">
+                Click here
+              </Link>{' '}
+              to view sample addresses.
+            </p>
+          </div>
         </form>
       </div>
 
