@@ -4,6 +4,9 @@
 
 This project is an address validation application using modern web technologies including Next.js 15 (with the new App Router), React, TypeScript, Tailwind CSS, and Apollo (Client & Server) to create a secure, robust solution. The application features a user-friendly form that captures a postcode, suburb, and state and validates the address by querying the Australia Post API through a GraphQL proxy.
 
+![image](https://github.com/user-attachments/assets/2f9b4442-fc1f-4249-a9eb-9f6abb866e2f)
+
+
 ## Installation and Setup
 
 1. **Clone the Repository:**
