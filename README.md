@@ -10,7 +10,7 @@ This project is an address validation application using modern web technologies 
 
    ```bash
    git clone https://github.com/reezayn/australia-address-verifier.git
-   cd lawpath-tech-test
+   cd australia-address-verifier
    ```
 
 2. **Install Dependencies:**
