@@ -9,7 +9,7 @@ This project is an address validation application using modern web technologies 
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/reezayn/lawpath-tech-test.git
+   git clone https://github.com/reezayn/australia-address-verifier.git
    cd lawpath-tech-test
    ```
 
